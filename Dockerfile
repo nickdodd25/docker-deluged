@@ -60,3 +60,5 @@ COPY root /
 
 EXPOSE 58846 58946 58946/udp
 VOLUME /config /downloads
+
+ENTRYPOINT [ "/init" ]
