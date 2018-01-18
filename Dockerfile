@@ -14,6 +14,10 @@ RUN apk add --no-cache ca-certificates wget \
  && tar xvfz /tmp/s6-overlay.tar.gz -C / \
  && rm -f /tmp/s6-overlay.tar.gz 
 
+RUN groupmod -g 1000 users && \
+ useradd -u 911 -U -d /config -s /bin/false abc && \
+ usermod -G users abc && \
+
 
 RUN \
   echo "**** install build packages ****" && \
