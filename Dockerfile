@@ -7,6 +7,9 @@ RUN apk upgrade
 
 # environment variables
 ENV PYTHON_EGG_CACHE="/config/plugins/.python-eggs"
+ENV PS1="$(whoami)@$(hostname):$(pwd)$ " \
+HOME="/root" \
+TERM="xterm"
 
 # s6 overlay
 RUN apk add --no-cache ca-certificates wget bash \
