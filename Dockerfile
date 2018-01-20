@@ -52,6 +52,11 @@ RUN \
 	deluge 
 
 RUN \
+	 echo "**** install pip packages ****" && \
+	 pip install --no-cache-dir -U \
+		incremental
+
+RUN \
 	echo "Clean up clean up everybody do your share." && \
 	apk del --purge \
 		build-dependencies && \
