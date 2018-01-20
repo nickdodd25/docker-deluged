@@ -12,55 +12,55 @@ HOME="/root" \
 TERM="xterm"
 
 # s6 overlay
-RUN apk add --no-cache ca-certificates wget bash \
- && wget https://github.com/just-containers/s6-overlay/releases/download/v1.21.2.2/s6-overlay-amd64.tar.gz -O /tmp/s6-overlay.tar.gz \
- && tar xvfz /tmp/s6-overlay.tar.gz -C / \
- && rm -f /tmp/s6-overlay.tar.gz 
+RUN \
+	echo "Install the s6 overlay" && \
+	apk add --no-cache ca-certificates wget bash \
+	&& wget https://github.com/just-containers/s6-overlay/releases/download/v1.21.2.2/s6-overlay-amd64.tar.gz -O /tmp/s6-overlay.tar.gz \
+	&& tar xvfz /tmp/s6-overlay.tar.gz -C / \
+	&& rm -f /tmp/s6-overlay.tar.gz 
 
 
 RUN \
-  echo "**** install build packages ****" && \
- apk add --no-cache --virtual=build-dependencies \
-	g++ \
-	gcc \
-	libffi-dev \
-	openssl-dev \
-	py2-pip \
-	python2-dev && \
- echo "**** install runtime packages ****" && \
+	echo "Build dependencies" && \
+	apk add --no-cache --virtual=build-dependencies \
+		curl \
+		tar \
+		g++ \
+		gcc \
+		libffi-dev \
+		openssl-dev \
+		py2-pip \
+		python2-dev
+
+RUN \
+ echo "Runtime Packages" && \
  apk add --no-cache \
-	ca-certificates \
+	coreutils \
+	shadow \
+	tzdata \
 	curl \
 	libressl2.6-libssl \
 	openssl \
 	p7zip \
 	unrar \
-	unzip && \
- apk add --no-cache \
+	unzip
+
+RUN \
+	echo "Install deluge" && \
+	apk add --no-cache \
 	--repository http://nl.alpinelinux.org/alpine/edge/testing \
-	deluge && \
- echo "**** install pip packages ****" && \
- pip install --no-cache-dir -U \
-	incremental \
-	pip && \
- pip install --no-cache-dir -U \
-	crypto \
-	mako \
-	markupsafe \
-	pyopenssl \
-	service_identity \
-	six \
-	twisted \
-	zope.interface && \
- echo "**** cleanup ****" && \
- apk del --purge \
-	build-dependencies && \
- rm -rf \
-	/root/.cache
+	deluge 
+
+RUN \
+	echo "Clean up clean up everybody do your share." && \
+	apk del --purge \
+		build-dependencies && \
+	rm -rf \
+		/root/.cache
 
 RUN groupmod -g 1000 users \
-useradd -u 911 -U -d /config -s /bin/false abc \
-usermod -G users abc
+	useradd -u 911 -U -d /config -s /bin/false abc \
+	usermod -G users abc
 
 # root filesystem
 COPY root /
