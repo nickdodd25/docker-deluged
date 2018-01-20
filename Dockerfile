@@ -89,10 +89,10 @@ RUN groupmod -g 1000 users \
 	&& useradd -u 911 -U -d /config -s /bin/false abc \
 	&& usermod -G users abc
 
-# root filesystem
-COPY root /
-
 EXPOSE 58846 58946 58946/udp
 VOLUME /config /downloads
+
+# root filesystem
+COPY root /
 
 ENTRYPOINT [ "/init" ]
