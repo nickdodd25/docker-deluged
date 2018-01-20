@@ -6,6 +6,11 @@ PGID=${PGID:-911}
 groupmod -o -g "$PGID" abc
 usermod -o -u "$PUID" abc
 
+rm /config/auth -f 
+USERNAME=${USERNAME}
+PASSWORD=${PASSWORD}
+echo "$USERNAME:$PASSWORD:10" >/config/auth
+
 echo '
 -------------------------------------
 Deluged by nickd25
@@ -23,9 +28,6 @@ User gid:    $(id -g abc)
 chown abc:abc /config
 chown abc:abc /downloads
 
-rm /config/auth -f 
-USERNAME=${USERNAME}
-PASSWORD=${PASSWORD}
-echo "$USERNAME:$PASSWORD:10" >auth
-
-echo "$USERNAME:$PASSWORD:10"
+echo "
+Deluge username: $USERNAME
+Deluge Password: $PASSWORD"
