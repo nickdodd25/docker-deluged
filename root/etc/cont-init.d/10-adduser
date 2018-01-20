@@ -22,3 +22,10 @@ User gid:    $(id -g abc)
 "
 chown abc:abc /config
 chown abc:abc /downloads
+
+rm /config/auth -f 
+USERNAME=${USERNAME}
+PASSWORD=${PASSWORD}
+echo "$USERNAME:$PASSWORD:10" >auth
+
+echo "$USERNAME:$PASSWORD:10"
