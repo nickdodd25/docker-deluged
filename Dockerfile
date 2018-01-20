@@ -54,7 +54,15 @@ RUN \
 RUN \
 	 echo "**** install pip packages ****" && \
 	 pip install --no-cache-dir -U \
-		incremental
+		incremental \
+		crypto \
+		mako \
+		markupsafe \
+		pyopenssl \
+		service_identity \
+		six \
+		twisted \
+		zope.interface
 
 RUN \
 	echo "Clean up clean up everybody do your share." && \
