@@ -11,6 +11,19 @@ ENV PS1="$(whoami)@$(hostname):$(pwd)$ " \
 HOME="/root" \
 TERM="xterm"
 
+
+
+ARG Username="default"
+ARG Password="changeme69"
+ARG Puid="911"
+ARG Pgid="911"
+
+ENV USERNAME=$Username
+ENV PASSWORD=$Password
+ENV PGID=$Pgid
+ENV PUID=$Puid
+
+
 # s6 overlay
 RUN \
 	echo "Install the s6 overlay" && \
@@ -49,7 +62,8 @@ RUN \
 	echo "Install deluge" && \
 	apk add --no-cache \
 	--repository http://nl.alpinelinux.org/alpine/edge/testing \
-	deluge 
+	deluge \
+	geoip
 
 RUN \
 	 echo "**** install pip packages ****" && \
