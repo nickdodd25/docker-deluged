@@ -6,6 +6,8 @@ PGID=${PGID:-911}
 groupmod -o -g "$PGID" abc
 usermod -o -u "$PUID" abc
 
+mv core.conf /config
+
 rm /config/auth -f 
 USERNAME=${USERNAME}
 PASSWORD=${PASSWORD}
